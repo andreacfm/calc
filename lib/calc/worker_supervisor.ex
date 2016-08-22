@@ -6,7 +6,7 @@ defmodule Calc.WorkerSupervisor do
   end
 
   def init stash_pid do
-    children = [worker(Calc.Calculator, [stash_pid])]
+    children = [ worker(Calc.Calculator, [stash_pid]) ]
     supervise children, strategy: :one_for_one
   end
 

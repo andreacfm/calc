@@ -3,7 +3,7 @@ defmodule Calc.Stash do
 
   ## External API
   def start_link(current_value) do
-    {:ok, pid} = GenServer.start_link(__MODULE__, current_value)
+    {:ok, pid} = GenServer.start_link(__MODULE__, current_value, [debug: [:trace]])
   end
 
   def save_value pid, value do
@@ -11,7 +11,6 @@ defmodule Calc.Stash do
   end
 
   def get_value pid do
-     IO.inspect(pid)
      GenServer.call pid, :get_value
   end
 

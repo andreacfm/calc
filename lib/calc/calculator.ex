@@ -3,15 +3,14 @@ defmodule Calc.Calculator do
 
   ## API
   def start_link(stash_pid) do
-    IO.inspect(value)
-    {:ok, pid} = GenServer.start_link(__MODULE__, stash_pid, name: __MODULE__)
+    {:ok, pid} = GenServer.start_link(__MODULE__, stash_pid, [debug: [:trace], name: __MODULE__])
   end
 
   def value do
     GenServer.call(__MODULE__, :value)
   end
 
-  def calc(operator, n) do
+  def exec(operator, n) do
     GenServer.cast(__MODULE__, {operator, n})
   end
 
@@ -25,7 +24,6 @@ defmodule Calc.Calculator do
   ## GenServer
   def init(stash_pid) do
     current_value = Calc.Stash.get_value(stash_pid)
-    IO.inspect(current_value)
     {:ok, {current_value, stash_pid}}
   end
 
